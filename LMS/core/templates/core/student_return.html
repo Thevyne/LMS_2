@@ -1,0 +1,18 @@
+{% extends 'core/base2.html' %}
+
+{% block content %}
+<h2>Your Book Returns</h2>
+<ul>
+  {% for return in returns %}
+    <li>
+      {{ return.book.title }} - Returned on {{ return.return_date }}
+    </li>
+  {% endfor %}
+</ul>
+<h2>Return a Book</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Return Book</button>
+</form>
+{% endblock %}

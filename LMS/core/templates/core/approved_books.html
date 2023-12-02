@@ -1,0 +1,16 @@
+{% extends 'core/base2.html' %}
+
+{% load custom_filters %}
+{% block content %}
+
+
+<h1>Approved Books</h1>
+<ul>
+    {% for book in approved_books|exclude_returned_books:returned_books %}
+    <li>{{ book.title }}</li>
+    <a href="{% url 'return_book' book.id %}" class="btn btn-primary">Return</a>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+

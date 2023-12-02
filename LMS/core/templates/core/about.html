@@ -1,0 +1,66 @@
+{%extends 'core/base.html' %}
+{% block content%}
+<!-- about_us.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="about-container">
+        <div class="blur-background"></div>
+        <div class="text-content">
+          <h1>About Us</h1>
+          <p>This project was created by three dedicated students</p>
+          
+          
+          <style>
+            h1, h2, h3, h4, h5 {
+                color: blue;
+            }
+            p {
+                color: white;
+                font-size: 20px;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+            .about-container {
+                position: relative;
+                overflow: hidden;
+            }
+    
+            .blur-background {
+                position: absolute;
+                width: 200%;
+                height: 200%;
+                background-image: url('/media/background/old-library-book.webp');
+                filter: blur(5px); /* Adjust the blur amount as needed */
+                z-index: -1;
+            }
+    
+            .text-content {
+                text-align: center;
+                position: relative;
+                z-index: 1;
+                color: #fff; /* Text color */
+            }
+    
+            .text-content h1 {
+                font-size: 36px;
+            }
+    
+            .text-content p {
+                font-size: 18px;
+            }
+    
+        </style>
+        </div>
+      </div>
+    
+</body>
+</html>
+
+{% endblock %}

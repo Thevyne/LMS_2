@@ -1,0 +1,73 @@
+{% extends 'core/base2.html' %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+  <h2>Add Book</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Book</button>
+  </form>
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+</head>
+
+  <h2>Books List</h2>
+  <ul>
+    {% for book in books %}
+      <li>
+        {{ book.title }} by {{ book.author }} 
+        {% if book.available %}
+          <a href="{% url 'update_availability' book.id %}" class="btn btn-success">Mark as Unavailable</a>
+        {% else %}
+          <a href="{% url 'update_availability' book.id %}" class="btn btn-warning">Mark as Available</a>
+        {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="book_id" value="{{ book.id }}">
+          <span>Available copies: <span id="quantity{{ book.id }}">{{ book.available_copies }}</span></span>
+          <button type="button" class="btn btn-success update-quantity" data-action="increment" data-bookid="{{ book.id }}">+</button>
+          <button type="button" class="btn btn-warning update-quantity" data-action="decrement" data-bookid="{{ book.id }}">-</button>
+        </form>
+                <a href="{% url 'delete_book' book.id %}" class="btn btn-danger">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <script>
+    // Add JavaScript to handle quantity updates
+    const updateQuantityButtons = document.querySelectorAll('.update-quantity');
+  
+    updateQuantityButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const action = button.getAttribute('data-action');
+        const bookId = button.getAttribute('data-bookid');
+        const quantityElement = document.getElementById(`quantity${bookId}`);
+        let quantity = parseInt(quantityElement.innerText);
+  
+        if (action === 'increment') {
+          quantity += 1;
+        } else if (action === 'decrement') {
+          quantity = Math.max(0, quantity - 1);
+        }
+  
+        // Update the quantity in the view
+        quantityElement.innerText = quantity;
+  
+        // Send the updated quantity to the server using AJAX
+        // Implement AJAX functionality here (e.g., using Fetch API or jQuery.ajax)
+        // You need to send the book ID and the updated quantity to the server for processing.
+      });
+    });
+  </script>
+{% endblock %}
